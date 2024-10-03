@@ -1,0 +1,169 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  /*   Widget build(BuildContext context) {
+    return MaterialApp(
+      theme:ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color.fromARGB(255, 255, 255, 255)
+          ),
+          useMaterial3: true,
+      ),  */
+
+  /* Widget build(BuildContext context) {
+    return MaterialApp(
+      // Theme: el tema viene predeterminado, aunque se puede personalizar para cada elemento
+      theme:ThemeData( 
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 255, 255, 255),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              elevation: 0,
+            )
+          ),
+          useMaterial3: true,
+      ), */
+  /* Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light().copyWith(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+        ),
+      ), */
+  /* home: Scaffold(
+        appBar: AppBar(title: const Text('Inicio'), actions: const [
+          Icon(Icons.notifications_outlined),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Icon(Icons.settings_outlined),
+          )
+        ]),
+         */
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 255, 255, 255),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 243, 245, 247),
+          foregroundColor: const Color.fromARGB(255, 14, 19, 23),
+          elevation: 0,
+        )),
+      ),
+    
+            home: Scaffold(
+        appBar: AppBar(
+          leading: const Icon(Icons.arrow_back_ios), 
+          
+          title:Text('Inicio'),
+           
+        ),
+
+        body: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: [
+            //primera card
+
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // Determina en qué lugar en ele eje alinean o comienzan los elementos
+                      // start: extremo izq; end: extremo derecho; center: al centro; strecht: tratará de ocupar todo el ancho disponible
+                      children: [
+                        Container(
+                          height: 100, // tamaño cuadrado
+                          color: const Color.fromARGB(255, 197, 197, 197),
+                          width: double.infinity,
+                        ),
+                        const ListTile(
+                          // Para crear listas de items
+                          title: Text(
+                            'Título de la Card 1',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0,
+                            ),
+                          ),
+
+                          subtitle: Text(
+                            'Este es el subtitle',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                //Segunda al lado
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment
+                          .center, // Determina en qué lugar en ele eje alinean o comienzan los elementos
+                      // start: extremo izq; end: extremo derecho; center: al centro; strecht: tratará de ocupar todo el ancho disponible
+                      children: [
+                        Container(
+                          height: 100, // tamaño cuadrado
+                          color: const Color.fromARGB(255, 197, 197, 197),
+                          width: double.infinity,
+                        ),
+                        const ListTile(
+                          // Para crear listas de items
+                          title: Text(
+                            'Título de la Card 2',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0,
+                            ),
+                          ),
+
+                          subtitle: Text(
+                            'Este es el subtitle',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
