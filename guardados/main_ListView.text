@@ -31,7 +31,7 @@ class MainApp extends StatelessWidget {
         body: ListView(
           children: [
             Container(
-              height: 200.0,
+              height: 570.0,
               width: double.infinity,
               color: Colors.grey,
               child: const Text('Tamaño card'),
@@ -57,54 +57,22 @@ class MainApp extends StatelessWidget {
             const SizedBox(
               height: 12.0,
             ),
-        
-            //Row
             Container(
               height: 148.0,
-              color: Colors.transparent,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.orange,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 12.0,
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.orange,
-                    ),
-                  ),
-                ],
-              ),
+              width: double.infinity,
+              color: Colors.blue,
+              child: const Text('Tamaño item lista'),
             ),
             const SizedBox(
               height: 12.0,
             ),
             Container(
               height: 148.0,
-              color: Colors.transparent,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.orange,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 12.0,
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.orange,
-                    ),
-                  ),
-                ],
-              ),
+              width: double.infinity,
+              color: Colors.blue,
+              child: const Text('Tamaño item lista'),
             ),
-          ], //Children
+          ],
         ),
       ),
     );

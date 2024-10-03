@@ -33,15 +33,18 @@ class MainApp extends StatelessWidget {
               elevation: 4.0,
               margin: const EdgeInsets.all(8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center, // Determina en qué lugar en ele eje alinean o comienzan los elementos 
+                // start: extremo izq; end: extremo derecho; center: al centro; strecht: tratará de ocupar todo el ancho disponible
                 children: [
                   Container(
                     height: 200,
                     color: const Color.fromARGB(255, 197, 197, 197),
                     width: double.infinity,
                   ),
-                  const ListTile(
+                  const ListTile( // Para crear listas de items
                     title: Text('Título de la Card 1'),
+                    subtitle: Text('Este es el subtitle'),
+
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -64,7 +67,9 @@ class MainApp extends StatelessWidget {
                 Expanded(
                   child: Card(
                     elevation: 4.0,
-                    margin: const EdgeInsets.only(left: 8.0, bottom: 16.0),
+                    margin: const EdgeInsets.only(left: 8.0, bottom: 16.0), // Margin permite determinar cuánto espacio externo tendrá un widget
+                    // Utiliza EdgeInsets para definir el epacio por cada lado.
+                    // margin: const EdgeInsets.formLTRB(Left, Top, Right, Bottom),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -173,3 +178,4 @@ class MainApp extends StatelessWidget {
     );
   }
 }
+

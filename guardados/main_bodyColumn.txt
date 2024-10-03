@@ -28,41 +28,17 @@ class MainApp extends StatelessWidget {
               child: Icon(Icons.account_circle),)
           ]
         ),
-        body: ListView(
+        body: Column(
           
         //  child: Column( 
           children: [
             Container(
-              height: 570.0,
-              width: double.infinity,
-              color: Colors.grey,
-              child: const Text('Tamaño card'),
+              height: 200.0,
+              width: double.infinity, // Ocupa todo el ancho disponible
+              color: Colors.grey, // Color de fondo gris 
+              child: const Text('Tamaño card'), // Texto dentro del primer Container
             ),
           
-          const SizedBox(height: 12.0,),
-          Container(
-            height: 148.0,
-            width: double.infinity,
-            color: Colors.blue,
-            child: const  Text('Tamaño item lista'),
-          ),
-            
-            const SizedBox(height: 12.0,),
-          Container(
-            height: 148.0,
-            width: double.infinity,
-            color: Colors.blue,
-            child: const  Text('Tamaño item lista'),
-          ),
-
-          const SizedBox(height: 12.0,),
-          Container(
-            height: 148.0,
-            width: double.infinity,
-            color: Colors.blue,
-            child: const  Text('Tamaño item lista'),
-          ),
-
           const SizedBox(height: 12.0,),
           Container(
             height: 148.0,

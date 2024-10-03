@@ -57,13 +57,20 @@ class MainApp extends StatelessWidget {
             const SizedBox(
               height: 12.0,
             ),
-        
-            //Row
+            
             Container(
               height: 148.0,
               color: Colors.transparent,
               child: Row(
                 children: [
+                  Expanded(
+                    child: Container(
+                      color: Colors.orange,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 12.0,
+                  ),
                   Expanded(
                     child: Container(
                       color: Colors.orange,
@@ -88,7 +95,7 @@ class MainApp extends StatelessWidget {
               color: Colors.transparent,
               child: Row(
                 children: [
-                  Expanded(
+                  Expanded( //Expandend: ubicará tantos elementos como se puedan en row 
                     child: Container(
                       color: Colors.orange,
                     ),

@@ -19,7 +19,8 @@ class MainApp extends StatelessWidget {
 
  Widget build(BuildContext context) {
     return MaterialApp(
-      theme:ThemeData(
+      // Theme: el tema viene predeterminado, aunque se puede personalizar para cada elemento
+      theme:ThemeData( 
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 255, 136, 0),
           ),
@@ -30,6 +31,7 @@ class MainApp extends StatelessWidget {
               elevation: 4,
             )
           ),
+          useMaterial3: true,
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text('Inicio'), actions: const [
