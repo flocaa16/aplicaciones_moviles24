@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "713833540000",
+    "project_id": "finplus-98b61",
+    "storage_bucket": "finplus-98b61.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713833540000:android:fb113a27b7c13ed7fedcc5",
+        "android_client_info": {
+          "package_name": "com.example.finplus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJk80XQ0D9PYS90ZfGilp1SoElFh8d2zo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
