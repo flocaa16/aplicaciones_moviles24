@@ -1,89 +1,84 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class FormularioScreen extends StatefulWidget {
-  final DocumentSnapshot? inversion;
+class FormulariodosScreen extends StatefulWidget {
+  final DocumentSnapshot? retirar;
 
-  const FormularioScreen({super.key, this.inversion});
+  const FormulariodosScreen({super.key, this.retirar});
 
   @override
   // ignore: library_private_types_in_public_api
   _FormularioScreenState createState() => _FormularioScreenState();
 }
 
-class _FormularioScreenState extends State<FormularioScreen> {
+class _FormularioScreenState extends State<FormulariodosScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final _nombreController = TextEditingController();
-  final _inversionMensualController = TextEditingController();
-  final _inversionMensualController2 = TextEditingController();
+  int? _retiroInicial;
+  String? _ubiciacionSeleccionado;
 
-  int? _inversionInicial;
-  int? _inversionMen;
-  String? _tiempoSeleccionado;
-
-  final List<int> opcionesInversionInicial = [10000, 20000, 30000, 40000];
-  final List<int> opcionesInversionMen = [10000, 20000, 30000, 40000];
-  final List<String> opcionesTiempo = [
-    'Menos de un año',
-    '1-2 años',
-    '3-5 años',
-    'Más de 5 años'
+  final List<int> opcionesretiroInicial = [100000, 200000, 500000, 1000000];
+  final List<String> opcionesUbicacion = [
+    'Otro Portafolio',
+    'Mi cuenta Bancaria'
   ];
+
+   final _itemController = TextEditingController();
+  final _rutController = TextEditingController();
+  // ignore: non_constant_identifier_names
+  final _CuentaController = TextEditingController();
+  // ignore: non_constant_identifier_names
+  final _RetiroInicialController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    if (widget.inversion != null) {
-      final inversionData = widget.inversion!.data() as Map<String, dynamic>;
-      _nombreController.text = inversionData['nombre'] ?? '';
-      _inversionMensualController.text =
-          (inversionData['inversionMensual'] ?? '').toString();
-      _inversionMensualController2.text =
-          (inversionData['inversionMensual'] ?? '').toString();
-      _inversionInicial = inversionData['inversionInicial'];
-      _inversionMen = inversionData['inversionMen'];
-      _tiempoSeleccionado = inversionData['tiempo'];
+    if (widget.retirar != null) {
+      final retirarData = widget.retirar!.data() as Map<String, dynamic>;
+      _itemController.text = retirarData['item'];
+      _retiroInicial = retirarData['retiroInicial'];
+      _RetiroInicialController.text = (retirarData['retiro'] ?? '').toString();
+      _ubiciacionSeleccionado = retirarData['ubicacion'];
+      _rutController.text = retirarData['rut'] ?? '';
+      _CuentaController.text = (retirarData['cuenta'] ?? '').toString();
     }
   }
 
   @override
   void dispose() {
-    _nombreController.dispose();
-    _inversionMensualController.dispose();
-    _inversionMensualController2.dispose();
+    _rutController.dispose();
+    _CuentaController.dispose();
     super.dispose();
   }
 
   Future<void> _saveUser() async {
     if (_formKey.currentState!.validate()) {
-      final inversionData = {
-        'nombre': _nombreController.text,
-        'inversionInicial': _inversionInicial,
-        'inversionMen': _inversionMen,
-        'inversionMensual': int.tryParse(_inversionMensualController.text) ?? 0,
-        'inversionMensual2':
-            int.tryParse(_inversionMensualController2.text) ?? 0,
-        'tiempo': _tiempoSeleccionado,
+      final retirarData = {
+        'item': _itemController.text,
+        'retiroInicial': _retiroInicial,
+        'retiro': int.tryParse(_RetiroInicialController.text) ?? 0,
+        'ubicacion': _ubiciacionSeleccionado,
+        'rut': _rutController.text,
+        'cuenta': _CuentaController.text,
       };
 
       try {
-        if (widget.inversion == null) {
+        if (widget.retirar == null) {
           await FirebaseFirestore.instance
-              .collection('inversion')
-              .add(inversionData);
+              .collection('retirar')
+              .add(retirarData);
           // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Inversión creada correctamente')),
+            const SnackBar(content: Text('Retiro creado correctamente')),
           );
         } else {
           await FirebaseFirestore.instance
-              .collection('inversion')
-              .doc(widget.inversion!.id)
-              .update(inversionData);
+              .collection('retirar')
+              .doc(widget.retirar!.id)
+              .update(retirarData);
           // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Inversión actualizada correctamente')),
+            const SnackBar(content: Text('Retiro actualizado correctamente')),
           );
         }
         // ignore: use_build_context_synchronously
@@ -91,7 +86,7 @@ class _FormularioScreenState extends State<FormularioScreen> {
       } catch (e) {
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error al guardar la inversión')),
+          const SnackBar(content: Text('Error al guardar el retiro')),
         );
       }
     }
@@ -101,9 +96,9 @@ class _FormularioScreenState extends State<FormularioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.inversion == null
-            ? 'Crear inversión'
-            : 'Editar inversión'),
+        title: Text(widget.retirar == null
+            ? 'Retirar dinero'
+            : 'Editar retiro'),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -118,15 +113,16 @@ class _FormularioScreenState extends State<FormularioScreen> {
           key: _formKey,
           child: ListView(
             children: [
+              //nombre retiro
               const Text(
-                'Nombre de la inversión',
+                'Nombre',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: _nombreController,
+                controller: _itemController,
                 decoration: const InputDecoration(
-                  labelText: "Nombre de la inversión",
+                  labelText: "Nombre del Retiro",
                   fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(),
@@ -137,85 +133,17 @@ class _FormularioScreenState extends State<FormularioScreen> {
                   }
                   return null;
                 },
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Inversión Inicial',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: _inversionMensualController,
-                decoration: const InputDecoration(
-                  labelText: "ej. 80.000",
-                  fillColor: Colors.white,
-                  filled: true,
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingrese un monto';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 10),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: opcionesInversionInicial.map((amount) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: ChoiceChip(
-                        label: Text('\$$amount'),
-                        selected: _inversionInicial == amount,
-                        onSelected: (selected) {
-                          setState(() {
-                            _inversionInicial = selected ? amount : null;
-                            _inversionMensualController.text =
-                                selected ? '$amount' : '';
-                          });
-                        },
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        labelStyle: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.8),
-                        ),
-                        backgroundColor: _inversionInicial == amount
-                            ? Theme.of(context)
-                                .colorScheme
-                                .secondary
-                                .withOpacity(0.3)
-                            : Colors.white,
-                        selectedColor: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.3),
-                        side: BorderSide(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.8),
-                          width: 1.5,
-                        ),
-                        showCheckmark: false,
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+              ),const SizedBox(height: 12),
               const Divider(thickness: 1.0),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
+              //Monto a retirar
               const Text(
-                'Inversión Mensual',
+                'Monto a retirar',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: _inversionMensualController2,
+                controller: _RetiroInicialController,
                 decoration: const InputDecoration(
                   labelText: "ej. 20.000",
                   fillColor: Colors.white,
@@ -234,16 +162,16 @@ class _FormularioScreenState extends State<FormularioScreen> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: opcionesInversionMen.map((amount) {
+                  children: opcionesretiroInicial.map((amount) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: ChoiceChip(
                         label: Text('\$$amount'),
-                        selected: _inversionMen == amount,
+                        selected: _retiroInicial == amount,
                         onSelected: (selected) {
                           setState(() {
-                            _inversionMen = selected ? amount : null;
-                            _inversionMensualController2.text =
+                            _retiroInicial = selected ? amount : null;
+                            _RetiroInicialController.text =
                                 selected ? '$amount' : '';
                           });
                         },
@@ -254,7 +182,7 @@ class _FormularioScreenState extends State<FormularioScreen> {
                               .secondary
                               .withOpacity(0.8),
                         ),
-                        backgroundColor: _inversionMen == amount
+                        backgroundColor: _retiroInicial == amount
                             ? Theme.of(context)
                                 .colorScheme
                                 .secondary
@@ -279,39 +207,116 @@ class _FormularioScreenState extends State<FormularioScreen> {
               ),
               const Divider(thickness: 1.0),
               const SizedBox(height: 12),
+//¿A dónde te gustaría transferir tu dinero?
               const Text(
-                'Tiempo de Inversión',
+                '¿A dónde te gustaría transferir tu dinero?',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
-              DropdownButtonFormField<String>(
-                value: _tiempoSeleccionado,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: opcionesUbicacion.map((ubicacion) {
+                  final isSelected = _ubiciacionSeleccionado == ubicacion;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _ubiciacionSeleccionado = ubicacion;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: isSelected
+                                ? Theme.of(context).colorScheme.primary
+                                : Colors.grey.shade300,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 16,
+                              height: 16,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: isSelected
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Colors.white,
+                                border: Border.all(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  width: 2.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              ubicacion,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const Divider(thickness: 1.0),
+              const SizedBox(height: 12),
+
+              //Rut
+              const Text(
+                'Rut',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _rutController,
                 decoration: const InputDecoration(
-                  labelText: 'Tiempo de inversión',
+                  labelText: "Ej: XXXXXXXX-X",
                   fillColor: Colors.white,
                   filled: true,
                   border: OutlineInputBorder(),
                 ),
-                items: opcionesTiempo.map((tiempo) {
-                  return DropdownMenuItem<String>(
-                    value: tiempo,
-                    child: Text(tiempo),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _tiempoSeleccionado = value;
-                  });
-                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Por favor seleccione el tiempo de inversión';
+                    return 'Por favor ingrese su rut';
                   }
                   return null;
                 },
               ),
+              const SizedBox(height: 10),
+              //Cuenta
+              const Text(
+                'Cuenta',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: _CuentaController,
+                decoration: const InputDecoration(
+                  labelText: "Banco Itaú - 0021345678",
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingrese su cuenta';
+                  }
+                  return null;
+                },
+              ),
+
               const SizedBox(height: 32),
-             
               ElevatedButton(
   onPressed: _saveUser,
   style: ElevatedButton.styleFrom(
@@ -319,9 +324,9 @@ class _FormularioScreenState extends State<FormularioScreen> {
     padding: const EdgeInsets.symmetric(vertical: 12.0), // Ajustar el relleno
   ),
   child: Text(
-    widget.inversion == null ? 'Agregar inversión' : 'Actualizar',
+    widget.retirar == null ? 'Confirmar retiro' : 'Actualizar',
     style: const TextStyle(
-      fontSize: 16, // Tamaño de la fuente
+      fontSize: 14, // Tamaño de la fuente
       color: Colors.white, // Color del texto
     ),
   ),
